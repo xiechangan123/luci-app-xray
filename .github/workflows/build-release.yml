@@ -79,7 +79,7 @@ jobs:
           fi
           cd -
           file "$CACHE_DIR_SDK/$SDK_FILE"
-          tar -xf "$CACHE_DIR_SDK/$SDK_FILE"
+          tar -I zstd -xvf "$CACHE_DIR_SDK/$SDK_FILE"
           7z x "$CACHE_DIR_SDK/$SDK_FILE" -so | tar -C "$SDK_HOME" -xvf - --strip=1
           cd "$SDK_HOME"
           test -d "dl" && rm -rf "dl" || true
