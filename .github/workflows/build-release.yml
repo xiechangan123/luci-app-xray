@@ -79,7 +79,8 @@ jobs:
           fi
           cd -
           file "$CACHE_DIR_SDK/$SDK_FILE"
-          7z x "$CACHE_DIR_SDK/$SDK_FILE" -so | tar "$SDK_HOME" -xf | tar -C "$SDK_HOME" -xvf - --strip=1
+          tar -xf "$CACHE_DIR_SDK/$SDK_FILE"
+          7z x "$CACHE_DIR_SDK/$SDK_FILE" -so | tar -C "$SDK_HOME" -xvf - --strip=1
           cd "$SDK_HOME"
           test -d "dl" && rm -rf "dl" || true
           test -d "feeds" && rm -rf "feeds" || true
