@@ -80,7 +80,6 @@ jobs:
           cd -
           file "$CACHE_DIR_SDK/$SDK_FILE"
           zstd -d "$CACHE_DIR_SDK/$SDK_FILE"
-          cd "$CACHE_DIR_SDK/$SDK_FILE"
           7z x "$CACHE_DIR_SDK/$SDK_FILE" -so | tar -C "$SDK_HOME" -xvf - --strip=1
           cd "$SDK_HOME"
           test -d "dl" && rm -rf "dl" || true
