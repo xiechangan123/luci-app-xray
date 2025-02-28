@@ -19,8 +19,8 @@ jobs:
       matrix:
         include:
           - arch: x86_64
-            sdk_url_path: https://downloads.openwrt.org/snapshots/targets/x86/64
-            sdk_name: -sdk-x86-64_
+            sdk_url_path: https://downloads.openwrt.org/releases/23.05.5/targets/x86/64
+            sdk_name: -sdk-23.05.5-x86-64_
 
     env:
       SDK_URL_PATH: ${{ matrix.sdk_url_path }}
@@ -29,14 +29,14 @@ jobs:
       CONFIG_CCACHE: y
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
       - name: Prepare Cache Key
         id: cache_key
         run: echo "::set-output name=timestamp::$(date +"%s")"
 
       - name: Setup Cache
-        uses: actions/cache@v4
+        uses: actions/cache@v2
         with:
           path: |
             ${{ env.CACHE_DIR }}
@@ -46,7 +46,7 @@ jobs:
             openwrt-${{ matrix.arch }}-${{ env.PACKAGE_NAME }}-
       - name: Install Dependencies
         run: |
-          DEBIAN_FRONTEND=noninteractive sudo apt-get install -y ccache gettext libncurses5-dev xsltproc p7zip-full zstd
+          DEBIAN_FRONTEND=noninteractive sudo apt-get install -y ccache gettext libncurses5-dev xsltproc p7zip-full
       - name: Create Directories
         run: |
           CACHE_DIR_SDK="$(eval echo "$CACHE_DIR/sdk")"
@@ -79,10 +79,9 @@ jobs:
           fi
           cd -
           file "$CACHE_DIR_SDK/$SDK_FILE"
-          7z x "$CACHE_DIR_SDK/$SDK_FILE" -so | tar --use-compress-program=unzstd -xvf "$CACHE_DIR_SDK/$SDK_FILE" | tar -C "$SDK_HOME" -xvf - --strip=1
+          7z x "$CACHE_DIR_SDK/$SDK_FILE" -so | tar -C "$SDK_HOME" -xvf - --strip=1
           cd "$SDK_HOME"
           test -d "dl" && rm -rf "dl" || true
-          test -d "feeds" && rm -rf "feeds" || true
           test -d "feeds" && rm -rf "feeds" || true
           ln -s "$CACHE_DIR_DL" "dl"
           ln -s "$CACHE_DIR_FEEDS" "feeds"
