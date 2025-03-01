@@ -118,8 +118,6 @@ jobs:
       - name: Create Tag
         if: github.ref == 'refs/heads/main'
         run: |
-          git config --global user.email "you@example.com"
-          git config --global user.name "Your Name"
           git tag -a v1.0.$(date +'%Y%m%d%H%M%S') -m "Release version v1.0.$(date +'%Y%m%d%H%M%S')"
           git push origin --tags
         env:
