@@ -117,10 +117,9 @@ jobs:
       - name: Release and Upload Assets
         uses: softprops/action-gh-release@v2
         with:
-          files: "*.ipk"
+          files: "*.apk"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          TAG: 'v2.2.1'
 
   notify:
     name: Notify Release Publish
