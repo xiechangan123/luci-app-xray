@@ -113,8 +113,7 @@ jobs:
       - name: Copy Bin Files
         run: |
           find "$SDK_HOME/bin/" -type f -name "${PACKAGE_NAME}*.apk" -exec cp {} "${{ github.workspace }}" \;
-          find "${{ github.workspace }}" -type f -name "*.apk" -exec ls -lh {} \;
-          
+          find "${{ github.workspace }}" -type f -name "*.apk" -exec ls -lh {} \;    
       - name: Release and Upload Assets
         uses: softprops/action-gh-release@v2
         with:
