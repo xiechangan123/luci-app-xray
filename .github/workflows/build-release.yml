@@ -80,7 +80,7 @@ jobs:
           cd -
           file "$CACHE_DIR_SDK/$SDK_FILE"
           if [[ "$SDK_FILE" == *.tar.zst ]]; then
-            zstd -d "$CACHE_DIR_SDK/$SDK_FILE" --output "$CACHE_DIR_SDK/${SDK_FILE%.zst}"
+            zstd -d "$CACHE_DIR_SDK/$SDK_FILE" -output "$CACHE_DIR_SDK/${SDK_FILE%.zst}"
             tar -C "$SDK_HOME" -xvf "$CACHE_DIR_SDK/${SDK_FILE%.zst}" --strip=1
           else
             tar -C "$SDK_HOME" -xvf "$CACHE_DIR_SDK/$SDK_FILE" --strip=1
