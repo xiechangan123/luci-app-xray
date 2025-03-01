@@ -2,8 +2,8 @@ name: Build and Release
 
 on:
   push:
-    tags: 
-      - "v3.5.0"
+    tags:
+      - "*"
   workflow_dispatch:
 
 env:
@@ -114,6 +114,16 @@ jobs:
         run: |
           find "$SDK_HOME/bin/" -type f -name "${PACKAGE_NAME}*.apk" -exec cp {} "${{ github.workspace }}" \;
           find "${{ github.workspace }}" -type f -name "*.apk" -exec ls -lh {} \;
+
+      - name: Create Tag
+        if: github.ref == 'refs/heads/main'
+        run: |
+          git config --global user.email "you@example.com"
+          git config --global user.name "Your Name"
+          git tag -a v1.0.$(date +'%Y%m%d%H%M%S') -m "Release version v1.0.$(date +'%Y%m%d%H%M%S')"
+          git push origin --tags
+        env:
+           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Release and Upload Assets
         uses: softprops/action-gh-release@v2
         with:
